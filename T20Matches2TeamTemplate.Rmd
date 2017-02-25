@@ -1,0 +1,81 @@
+---
+title: "T20 Matches between 2 Teams"
+author: "Tinniam V Ganesh"
+date: "February 25, 2017"
+output: html_document
+---
+
+###1 International T20 Matches between 2 teams 
+Load  match data between any 2 teams from ./T20MatchesBetween2Teams for e.g.Australia-India-allMatches
+
+```{r}
+setwd("./T20MatchesBetween2Teams")
+load("Australia-India-allMatches.RData")
+aus_ind_matches <- matches
+#Replace below with your own countries
+country1<-"England"
+country2 <- "South Africa"
+country1VsCountry2 <- paste(country1,"-",country2,"-allMatches.RData",sep="")
+load(country1VsCountry2)
+country1_country2_matches <- matches
+
+```
+
+###2.Batsmen partnerships
+```{r}
+m<- teamBatsmenPartnershiOppnAllMatches(country1_country2_matches,"country1",report="summary")
+m
+m<- teamBatsmenPartnershiOppnAllMatches(country1_country2_matches,"country2",report="summary")
+m
+m<- teamBatsmenPartnershiOppnAllMatches(country1_country2_matches,"country1",report="detailed")
+m
+teamBatsmenPartnershipOppnAllMatchesChart(country1_country2_matches,"country1","country2")
+```
+
+###3. Team batsmen vs bowlers
+```{r}
+teamBatsmenVsBowlersOppnAllMatches(country1_country2_matches,"country1","country2")
+```
+
+###4. Bowling scorecard
+```{r}
+a <-teamBattingScorecardOppnAllMatches(country1_country2_matches,main="country1",opposition="country2")
+a
+```
+
+###5. Team bowling performance
+```{r}
+teamBowlingPerfOppnAllMatches(country1_country2_matches,main="country1",opposition="country2")
+```
+
+###6. Team bowler wickets
+```{r}
+teamBowlersWicketsOppnAllMatches(country1_country2_matches,main="country1",opposition="country2")
+m <-teamBowlersWicketsOppnAllMatches(country1_country2_matches,main="country1",opposition="country2",plot=FALSE)
+teamBowlersWicketsOppnAllMatches(country1_country2_matches,"country1","country2",top=3)
+m
+```
+
+###7. Team bowler vs batsmen
+```{r}
+teamBowlersVsBatsmenOppnAllMatches(country1_country2_matches,"country1","country2",top=5)
+```
+
+###8. Team bowler wicket kind
+```{r}
+teamBowlersWicketKindOppnAllMatches(country1_country2_matches,"country1","country2",plot=TRUE)
+m <- teamBowlersWicketKindOppnAllMatches(country1_country2_matches,"country1","country2",plot=FALSE)
+m[1:30,]
+```
+
+###9. Team bowler wicket runs
+```{r}
+teamBowlersWicketRunsOppnAllMatches(country1_country2_matches,"country1","country2")
+```
+
+###10. Plot wins and losses
+```{r}
+setwd("./T20Matches")
+plotWinLossBetweenTeams("country1","country2")
+```
+

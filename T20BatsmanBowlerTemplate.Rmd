@@ -1,0 +1,123 @@
+---
+title: "T20 batsmen and bowler template"
+author: "Tinniam V Ganesh"
+date: "February 25, 2017"
+output: html_document
+---
+
+###1 Batsman functions
+Get the batsman's details for a batsman
+
+```{r}
+setwd("../BattingBowlingDetails")
+kohli <- getBatsmanDetails(team="India",name="Kohli",dir=".")
+batsmanDF <- getBatsmanDetails(team="country1",name="batsmanName",dir=".")
+```
+
+###2. Runs vs deliveries
+```{r}
+batsmanRunsVsDeliveries(batsmanDF,"batsmanName")
+```
+
+###3. Batsman 4s & 6s
+```{r}
+batsman46 <- select(batsmanDF,batsman,ballsPlayed,fours,sixes,runs)
+p1 <- batsmanFoursSixes(batsman46,"batsmanName")
+```
+
+###4. Batsman dismissals
+```{r}
+batsmanDismissals(batsmanDF,"batsmanName")
+```
+
+###5. Runs vs Strike rate
+```{r}
+batsmanRunsVsStrikeRate(batsmanDF,"batsmanName")
+```
+
+###6. Batsman Moving Average
+```{r}
+batsmanMovingAverage(batsmanDF,"batsmanName")
+```
+
+
+###7. Batsman cumulative average
+```{r}
+batsmanCumulativeAverageRuns(batsmanDF,"batsmanName")
+```
+
+###8. Batsman cumulative strike rate
+```{r}
+batsmanCumulativeStrikeRate(batsmanDF,"batsmanName")
+```
+
+###9. Batsman runs against oppositions
+```{r}
+batsmanRunsAgainstOpposition(batsmanDF,"batsmanName")
+```
+
+###10. Batsman runs vs venue
+```{r}
+batsmanRunsVenue(batsmanDF,"batsmanName")
+```
+
+###11. Batsman runs predict
+```{r}
+batsmanRunsPredict(batsmanDF,"batsmanName")
+```
+
+###12. Bowler functions
+For example to get Ravicahnder Ashwin's bowling details
+```{r}
+setwd("../BattingBowlingDetails")
+ashwin <- getBowlerWicketDetails(team="India",name="Ashwin",dir=".")
+bowlerDF <- getBatsmanDetails(team="country1",name="bowlerName",dir=".")
+```
+
+###13. Bowler Mean Economy rate
+```{r}
+bowlerMeanEconomyRate(bowlerDF,"bowlerName")
+```
+
+###14. Bowler mean runs conceded
+```{r}
+bowlerMeanRunsConceded(bowlerDF,"bowlerName")
+```
+
+###15. Bowler Moving Average
+```{r}
+bowlerMovingAverage(bowlerDF,"bowlerName")
+```
+
+###16. Bowler cumulative average wickets
+```{r}
+bowlerCumulativeAvgWickets(bowlerDF,"bowlerName")
+```
+
+###17. Bowler cumulative Economy Rate (ER)
+```{r}
+bowlerCumulativeAvgEconRate(bowlerDF,"bowlerName")
+```
+
+###18. Bowler wicket plot
+```{r}
+bowlerWicketPlot(bowlerDF,"bowlerName")
+```
+
+###19. Bowler wicket against opposition
+```{r}
+bowlerWicketsAgainstOpposition(bowlerDF,"bowlerName")
+```
+
+
+###20. Bowler wicket at cricket grounds
+```{r}
+bowlerWicketsVenue(bowlerDF,"bowlerName")
+```
+
+###21. Predict number of deliveries to wickets
+```{r}
+setwd("./T20Matches")
+bowlerDF1 <- getDeliveryWickets(team="country1",dir=".",name="bowlerName",save=FALSE)
+bowlerWktsPredict(bowlerDF1,"bowlerName")
+```

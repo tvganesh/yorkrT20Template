@@ -1,0 +1,76 @@
+---
+title: "T20 Match Template"
+author: "Tinniam V Ganesh"
+date: "February 25, 2017"
+output: html_document
+---
+
+
+###1 International T20 Match Analysis
+Load any match data from the ./T20Matches folder for e.g. Afganistan-England-2016-03-23.RData
+
+```{r}
+setwd("./T20Matches")
+load("Afghanistan-England-2016-03-23.RData")
+afg_eng<- overs
+#The steps are
+load("Country1-Country2-Date.Rdata")
+country1_country2 <- overs
+```
+
+
+All analysis for this match can be done now
+###2. Scorecard
+```{r}
+teamBattingScorecardMatch(country1_country2,"Country1")
+teamBattingScorecardMatch(country1_country2,"Country2")
+```
+
+###3.Batting Partnerships
+```{r}
+teamBatsmenPartnershipMatch(country1_country2,"Country1","Country2")
+teamBatsmenPartnershipMatch(country1_country2,"Country2","Country1")
+```
+
+###4. Batsmen vs Bowler Plot
+```{r}
+teamBatsmenVsBowlersMatch(country1_country2,"Country1","Country2",plot=TRUE)
+teamBatsmenVsBowlersMatch(country1_country2,"Country1","Country2",plot=FALSE)
+```
+
+###5. Team bowling scorecard
+```{r}
+teamBowlingScorecardMatch(country1_country2,"Country1")
+teamBowlingScorecardMatch(country1_country2,"Country2")
+```
+
+###6. Team bowling Wicket kind match
+```{r}
+teamBowlingWicketKindMatch(country1_country2,"Country1","Country2")
+m <-teamBowlingWicketKindMatch(country1_country2,"Country1","Country2",plot=FALSE)
+m
+```
+###7. Team Bowling Wicket Runs Match
+```{r}
+teamBowlingWicketRunsMatch(country1_country2,"Country1","Country2")
+m <-teamBowlingWicketRunsMatch(country1_country2,"Country1","Country2",plot=FALSE)
+m
+```
+
+###8. Team Bowling Wicket Match
+```{r}
+m <-teamBowlingWicketMatch(country1_country2,"Country1","Country2",plot=FALSE)
+m
+teamBowlingWicketMatch(country1_country2,"Country1","Country2")
+```
+###9. Team Bowler vs Batsmen
+```{r}
+teamBowlersVsBatsmenMatch(country1_country2,"Country1","Country2")
+m <- teamBowlersVsBatsmenMatch(country1_country2,"Country1","Country2",plot=FALSE)
+m
+```
+###10. Match Worm chart
+```{r}
+matchWormGraph(country1_country2,"Country1","Country2")
+```
+

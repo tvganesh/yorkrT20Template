@@ -1,0 +1,127 @@
+---
+title: "T20 Template with yorkr"
+author: "Tinniam V Ganesh"
+date: "February 25, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+In this post I create yorkr templates for International T20 matches that
+are avialble on Cricsheet. While I have already done this with my latest post
+Inswinger  in which I downladed data from Dec 2016, I cant keep 
+so I cam creating this detailed post with all the steps needed
+for T20 analysis anytime as more matches ate played around the WorldPhones
+and more data is added to Cricsheet
+
+```{r}
+library(yorkr)
+library(dplyr)
+```
+# The first few steps take care of te al;l the data setup. This needs
+to be done before any of the analysis of T10 batsmen, bowlers, T20 match,
+matches between any 2 T20 countries or analysis of a teams performance against all
+other countries
+
+There will be 5 folders at the root
+
+1. T20data
+2. T20Matches
+3. T20MatchesBetween2Teams
+4. allMatchesAllOpposition
+5. BattingBowlingDetails
+
+
+# The source YAML files will be in T20Data folder
+# 1.Create directory T20Matches
+Some file conversions may give a problem. You could try to debug the
+problem or just remove it from the T20Data. At most  2 -4 file will have 
+conversion problems and I ignore these.
+
+```{r }
+convertAllYaml2RDataframesT20("T20Data","T20Matches")
+```
+
+### 2.Save all matches between all combinations of T20 nations
+This function will create the set of all matches between every T20 country
+against every other T20 country. This uses the data that was created in T20Matches,
+with the convertAllYaml2RDataframesT20() function.
+```{r}
+setwd("./T20MatchesBetween2Teams")
+saveAllMatchesBetweenTeams("../T20Matches")
+```
+
+### 3.Save all matches against all opposition
+This will create a consolidated dataframe of all matches played by every T20 playing
+nation against all other nattions. This also uses the data that was created in T20Matches,
+with the convertAllYaml2RDataframesT20() function.
+```{r}
+setwd("../allMatchesAllOpposition")
+saveAllMatchesAllOpposition("../T20Matches")
+```
+
+###4. Create batting and bowling details for each T20 country
+These are the current T20 playing nations. You can add to this vector
+as more countries start playing T20. You will get to know all T20 nations
+by also look at the directory created above namely allMatchesAllOpposition.
+his also uses the data that was created in T20Matches,
+with the convertAllYaml2RDataframesT20() function.
+```{r}
+setwd("../BattingBowlingDetails")
+teams <-c("Australia","India","Pakistan","West Indies", 'Sri Lanka',
+          "England", "Bangladesh","Netherlands","Scotland", "Afghanistan",
+          "Zimbabwe","Ireland","New Zealand","South Africa","Canada",
+          "Bermuda","Kenya","Hong Kong","Nepal","Oman","Papua New Guinea",
+          "United Arab Emirates")
+
+for(i in seq_along(teams)){
+    print(teams[i])
+    val <- paste(teams[i],"-details",sep="")
+    val <- getTeamBattingDetails(teams[i],dir="../T20Matches", save=TRUE)
+
+}
+
+for(i in seq_along(teams)){
+    print(teams[i])
+    val <- paste(teams[i],"-details",sep="")
+    val <- getTeamBowlingDetails(teams[i],dir="../T20Matches", save=TRUE)
+
+}
+```
+
+###5. Get the list of batsmen for a particular country
+For e.g. if you wanted to get the batsmen of Canada you would do the following. By
+replacing Canada for any other country you can get the batsmen of that country.
+These batsmen names can then be used in the batsmen analysis
+
+```{r}
+country="Canada"
+teamData <- paste(country,"-BattingDetails.RData",sep="")
+load(teamData)
+countryDF <- battingDetails
+bmen <- countryDF %>% distinct(batsman) 
+bmen <- as.character(bmen$batsman)
+batsmen <- sort(bmen)
+batsmen
+```
+
+###6. Get the list of bowlers for a particular country
+The method below can get the list of bowler names for any T20 nation. These
+names can then be used in the bowler analysis below
+```{r}
+country="Netherlands"
+teamData <- paste(country,"-BowlingDetails.RData",sep="")
+load(teamData)
+countryDF <- bowlingDetails
+bwlr <- countryDF %>% distinct(bowler) 
+bwlr <- as.character(bwlr$bowler)
+bowler <- sort(bwlr)
+bowler
+```
+
+### Now we are all set
+
