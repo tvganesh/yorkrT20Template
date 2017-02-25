@@ -12,18 +12,38 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Introduction
 
 In this post I create yorkr templates for International T20 matches that
-are avialble on Cricsheet. While I have already done this with my latest post
-Inswinger  in which I downladed data from Dec 2016, I cant keep 
-so I cam creating this detailed post with all the steps needed
-for T20 analysis anytime as more matches ate played around the WorldPhones
-and more data is added to Cricsheet
+are available on [Cricsheet](http://cricsheet.org/ ). With these templates you can convert all
+T20 data which is in yaml format to R dataframes. Further I create data and the necessary 
+templates for analyzing. All of these can be accessed at [yorkrT20Template](https://github.com/tvganesh/yorkrT20Template). The templates are
+
+
+1. Template for conversion and setup - T20Template.Rmd
+1. Any T20 match - T20Matchtemplate.Rmd
+2. T20 matches between 2 nations - T20Matches2TeamTemplate.Rmd
+3. A T20 nations performance against all other T20 nations - T20AllMatchesAllOppnTemplate.Rmd
+4. Analysis of T20 batsmen and bowlers of all T20 nations - T20BatsmanBowlerTemplate.Rmd
+
+Besides the templates the repository also includes the converted data for all T20 
+matches I downloaded  from Cricsheet in Dec 2016, You can recreate the files as
+more matches are added to Cricsheet site. This post contains all the steps needed
+for T20 analysis,  as more matches are played around the World and more 
+data is added to Cricsheet. This will also be my reference in future if I decide to
+analyze T20 in future!
+
+There will be 5 folders at the root
+
+1. T20data - Match files as yaml from Cricsheet
+2. T20Matches - Yaml match files converted to dataframes
+3. T20MatchesBetween2Teams - All Matches between any 2 T20 teams
+4. allMatchesAllOpposition - A T20 countries match data against all other teams
+5. BattingBowlingDetails - Batting and bowling details of all countries
 
 ```{r}
 library(yorkr)
 library(dplyr)
 ```
-# The first few steps take care of te al;l the data setup. This needs
-to be done before any of the analysis of T10 batsmen, bowlers, T20 match,
+The first few steps take care of the  data setup. This needs
+to be done before any of the analysis of T20 batsmen, bowlers, any T20 match,
 matches between any 2 T20 countries or analysis of a teams performance against all
 other countries
 
@@ -38,9 +58,14 @@ There will be 5 folders at the root
 
 # The source YAML files will be in T20Data folder
 # 1.Create directory T20Matches
-Some file conversions may give a problem. You could try to debug the
-problem or just remove it from the T20Data. At most  2 -4 file will have 
-conversion problems and I ignore these.
+Some files may give  conversions errors. You could try to debug the
+problem or just remove it from the T20data folder. At most  2-4 file will have 
+conversion problems and I usally remove then from the files to be 
+converted. 
+
+Also take a look at my [Inswinger](https://tvganesh.shinyapps.io/inswingerFinal/) shiny
+app which was created after performing the same conversion on the Dec 16 data
+.
 
 ```{r }
 convertAllYaml2RDataframesT20("T20Data","T20Matches")
